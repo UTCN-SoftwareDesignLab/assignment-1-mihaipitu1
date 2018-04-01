@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Assignment1.Database;
@@ -47,7 +48,10 @@ namespace Assignment1.Repository.Clients
                 {
                     command.CommandText = String.Format("Select * from client where id = {0}",id);
                     MySqlDataReader reader = command.ExecuteReader();
-                    client = GetClientFromReader(reader);
+                    while (reader.Read())
+                    {
+                        client = GetClientFromReader(reader);
+                    }
                 }
                 connection.Close();
             }
@@ -63,7 +67,7 @@ namespace Assignment1.Repository.Clients
                 connection.Open();
                 using (MySqlCommand command = connection.CreateCommand())
                 {
-                    command.CommandText = String.Format("Insert into client ({0},{1},{2})", client.GetId(), client.GetName(), client.GetAddress());
+                    command.CommandText = String.Format("Insert into client (id,name,address) values('{0}','{1}','{2}');", client.GetId(), client.GetName(), client.GetAddress());
                     command.ExecuteNonQuery();
                 }
                 connection.Close();
@@ -80,7 +84,8 @@ namespace Assignment1.Repository.Clients
                 connection.Open();
                 using (MySqlCommand command = connection.CreateCommand())
                 {
-                    command.CommandText = String.Format("Update client SET name = {1}, address = {2} where id = {0};", client.GetId(), client.GetName(), client.GetAddress());
+                    //Debug.WriteLine("This is the client: " + client.GetId() + " " + client.GetName() + " " + client.GetAddress());
+                    command.CommandText = String.Format("UPDATE client SET name = '{0}' ,address = '{1}' WHERE id = '{2}';",client.GetName(), client.GetAddress(), client.GetId());
                     command.ExecuteNonQuery();
                 }
                 connection.Close();
@@ -97,7 +102,7 @@ namespace Assignment1.Repository.Clients
                 connection.Open();
                 using (MySqlCommand command = connection.CreateCommand())
                 {
-                    command.CommandText = String.Format("delete from client where id = {0}", client.GetId());
+                    command.CommandText = String.Format("delete from client where id = {0};", client.GetId());
                     command.ExecuteNonQuery();
                 }
                 connection.Close();
@@ -107,6 +112,8 @@ namespace Assignment1.Repository.Clients
 
         private Client GetClientFromReader(MySqlDataReader reader)
         {
+            if (reader == null)
+                return null;
             return new ClientBuilder()
                 .SetId(reader.GetInt64(0))
                 .SetName(reader.GetString(1))

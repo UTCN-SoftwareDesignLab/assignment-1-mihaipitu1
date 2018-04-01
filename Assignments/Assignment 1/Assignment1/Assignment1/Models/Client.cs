@@ -11,6 +11,41 @@ namespace Assignment1.Models
         private string name;
         private string address;
 
+        public long Id
+        {
+            get
+            {
+                return GetId();
+            }
+            set
+            {
+                SetId(value);
+            }
+        }
+        public string Name
+        {
+            get
+            {
+                return GetName();
+            }
+            set
+            {
+                SetName(value);
+            }
+        }
+        public string Address
+        {
+            get
+            {
+                return GetAddress();
+            }
+            set
+            {
+                SetAddress(value);
+            }
+        }
+
+
         public long GetId()
         {
             return id;

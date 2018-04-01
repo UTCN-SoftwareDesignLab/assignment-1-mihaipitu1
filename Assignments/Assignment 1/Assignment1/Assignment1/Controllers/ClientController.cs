@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Assignment1.Models;
+using Assignment1.Models.Builders;
 using Assignment1.Service.Clients;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -32,64 +34,60 @@ namespace Assignment1.Controllers
         // POST: Client/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public ActionResult Create(Client client)
         {
-            try
-            {
-                // TODO: Add insert logic here
-
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            Debug.WriteLine(clientService.GetMaxId());
+            var newClient = new ClientBuilder()
+                .SetId(clientService.GetMaxId() + 1)
+                .SetName(client.GetName())
+                .SetAddress(client.GetAddress())
+                .Build();
+            clientService.CreateClient(newClient);
+            return RedirectToAction("Index", "Client");
         }
 
         // GET: Client/Edit/5
         public ActionResult Edit(int id)
         {
-            return View();
+            var client = clientService.GetClientById((long)id);
+            return View(client);
         }
 
         // POST: Client/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public ActionResult Edit(Client client)
         {
-            try
+            if (ModelState.IsValid)
             {
-                // TODO: Add update logic here
-
-                return RedirectToAction(nameof(Index));
+                var newClient = new ClientBuilder()
+                    .SetId(client.GetId())
+                    .Build();
+                //Debug.WriteLine("Name: " + client.GetName() + " Address:" + client.Address);
+                clientService.UpdateClient(newClient, client.Name, client.Address);
+                return RedirectToAction("Index", "Client");
             }
-            catch
-            {
-                return View();
-            }
+            return StatusCode(404);
         }
 
         // GET: Client/Delete/5
         public ActionResult Delete(int id)
         {
-            return View();
+            var client = clientService.GetClientById(id);
+            return View(client);
         }
 
         // POST: Client/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public ActionResult Delete(Client client)
         {
-            try
+            if (ModelState.IsValid)
             {
-                // TODO: Add delete logic here
-
-                return RedirectToAction(nameof(Index));
+                clientService.DeleteClient(client);
+                return RedirectToAction("Index", "Client");
             }
-            catch
-            {
-                return View();
-            }
+            return StatusCode(404);
         }
     }
 }

@@ -15,5 +15,9 @@ namespace Assignment1.Service.Clients
         bool CreateClient(Client client);
 
         bool UpdateClient(Client oldClient, string name, string address);
+
+        Client GetClientById(long id);
+
+        long GetMaxId();
     }
 }

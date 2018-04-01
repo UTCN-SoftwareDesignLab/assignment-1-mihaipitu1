@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Assignment1.Models;
@@ -38,7 +39,27 @@ namespace Assignment1.Service.Clients
                 .SetName(name)
                 .SetAddress(address)
                 .Build();
+           // Debug.WriteLine("Clients: "+ client.GetId() +" "+ name+ " " +address);
             return clientRepo.Update(client);
+        }
+
+        public Client GetClientById(long id)
+        {
+            return clientRepo.GetClientById(id);
+        }
+
+        public long GetMaxId()
+        {
+            List<Client> clients = GetClients();
+            long id = -1;
+            foreach(Client client in clients)
+            {
+                if (id < client.GetId())
+                { 
+                    id = client.GetId();
+                }
+            }
+            return id;
         }
     }
 }

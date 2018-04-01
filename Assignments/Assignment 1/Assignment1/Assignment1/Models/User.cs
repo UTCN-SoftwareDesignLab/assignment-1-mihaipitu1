@@ -13,6 +13,28 @@ namespace Assignment1.Models
         private string password;
         private Role role;
 
+        public string Name
+        {
+            get
+            {
+                return GetName();
+            }
+        }
+        public string Username
+        {
+            get
+            {
+                return GetUsername();
+            }
+        }
+        public string Role
+        {
+            get
+            {
+                return GetRole().GetRole();
+            }
+        }
+
         public long GetId()
         {
             return id;
