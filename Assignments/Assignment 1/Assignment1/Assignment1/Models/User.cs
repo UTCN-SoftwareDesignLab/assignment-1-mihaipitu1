@@ -13,11 +13,27 @@ namespace Assignment1.Models
         private string password;
         private Role role;
 
+
+        public long Id
+        {
+            get
+            {
+                return GetId();
+            }
+            set
+            {
+                SetId(value);
+            }
+        }
         public string Name
         {
             get
             {
                 return GetName();
+            }
+            set
+            {
+                SetName(value);
             }
         }
         public string Username
@@ -26,12 +42,31 @@ namespace Assignment1.Models
             {
                 return GetUsername();
             }
+            set
+            {
+                SetUsername(value);
+            }
         }
-        public string Role
+        public string Password
         {
             get
             {
-                return GetRole().GetRole();
+                return GetPassword();
+            }
+            set
+            {
+                SetPassword(value);
+            }
+        }
+        public Role Role
+        {
+            get
+            {
+                return GetRole();
+            }
+            set
+            {
+                SetRole(value);
             }
         }
 

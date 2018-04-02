@@ -16,9 +16,15 @@ namespace Assignment1.Service.Accounts
             this.spendingAccRepo = spendingAccRepo;
         }
 
-        public List<SpendingAccount> GetAccounts()
+        public List<Account> GetAccounts()
         {
-            return spendingAccRepo.FindAll();
+            List<SpendingAccount> spendingAccounts =  spendingAccRepo.FindAll();
+            List<Account> accounts = new List<Account>();
+            foreach(Account acc in spendingAccounts)
+            {
+                accounts.Add(acc);
+            }
+            return accounts;
         }
 
         public bool CreateAccount(Account account)

@@ -32,7 +32,7 @@ namespace Assignment1.Service.Users
         public Notification<bool> Register(string name, string username, string password, Role role)
         {
             User user = new UserBuilder()
-                .SetId(GetMaxId())
+                .SetId(GetMaxId()+1)
                 .SetName(name)
                 .SetUsername(username)
                 .SetPassword(password)
@@ -59,6 +59,11 @@ namespace Assignment1.Service.Users
 
         }
 
+        public User GetUserById(long id)
+        {
+            return userRepo.GetUserById(id);
+        }
+
         private string EncodePassword(string password)
         {
             SHA256 sha256 = new SHA256Managed();
@@ -67,7 +72,8 @@ namespace Assignment1.Service.Users
             string sha256Str = string.Empty;
             foreach (byte b in cryString)
             {
-                sha256Str += cryString.ToString();
+                sha256Str += b.ToString("x");
+   
             }
             return sha256Str;
         }

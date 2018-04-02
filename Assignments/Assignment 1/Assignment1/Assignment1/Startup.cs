@@ -3,8 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Assignment1.Database;
+using Assignment1.Repository.Accounts;
 using Assignment1.Repository.Clients;
+using Assignment1.Repository.Users;
+using Assignment1.Service.Accounts;
 using Assignment1.Service.Clients;
+using Assignment1.Service.Users;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -26,6 +30,13 @@ namespace Assignment1
         {
             services.AddMvc();
             services.AddTransient<DBConnectionWrapper>(_ => new DBConnectionFactory().GetConnectionWrapper(false));
+
+            services.AddScoped<ISavingAccountRepository,SavingAccountRepositoryMySQL>();
+            services.AddScoped<ISpendingAccountRepository, SpendingAccountRepositoryMySQL>();
+            services.AddSingleton<IAccountService, SavingAccountService>();
+            services.AddSingleton<IAccountService, SpendingAccountService>();
+            services.AddScoped<IUserRepository, UserRepositoryMySQL > ();
+            services.AddScoped<IAdminService,AdminServiceMySQL>();
             services.AddScoped<IClientRepository, ClientRepositoryMySQL>();
             services.AddScoped<IClientService, ClientServiceMySQL>();
         }

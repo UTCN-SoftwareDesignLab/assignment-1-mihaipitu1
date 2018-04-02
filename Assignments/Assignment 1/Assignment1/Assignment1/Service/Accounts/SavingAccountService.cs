@@ -28,9 +28,15 @@ namespace Assignment1.Service.Accounts
             return savingAccRepo.Delete((SavingAccount)account);
         }
 
-        public List<SavingAccount> GetAccounts()
+        public List<Account> GetAccounts()
         {
-            return savingAccRepo.FindAll();
+            List<SavingAccount> savingAccounts =  savingAccRepo.FindAll();
+            List<Account> accounts = new List<Account>();
+            foreach(Account acc in savingAccounts)
+            {
+                accounts.Add(acc);
+            }
+            return accounts;
         }
 
         public bool PayBills(Account accountFrom,double amount)

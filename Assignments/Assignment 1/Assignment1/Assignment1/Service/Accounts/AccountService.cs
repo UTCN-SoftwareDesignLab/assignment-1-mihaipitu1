@@ -8,6 +8,8 @@ namespace Assignment1.Service.Accounts
 {
     public interface IAccountService
     {
+        List<Account> GetAccounts();
+
         bool CreateAccount(Account account);
 
         bool TransferMoney(Account accountFrom, double amount,Account accountTo);

@@ -16,5 +16,7 @@ namespace Assignment1.Service.Users
         bool DeleteUser(User user);
 
         List<User> GetUsers();
+
+        User GetUserById(long id);
     }
 }

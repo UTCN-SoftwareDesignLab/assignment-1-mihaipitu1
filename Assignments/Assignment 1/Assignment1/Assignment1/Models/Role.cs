@@ -10,6 +10,18 @@ namespace Assignment1.Models
         private string role;
         private List<Right> rights;
 
+        public string RoleName
+        {
+            get
+            {
+                return GetRole();
+            }
+            set
+            {
+                SetRole(value);
+            }
+        }
+
         public Role(string role,List<Right> rights)
         {
             this.role = role;

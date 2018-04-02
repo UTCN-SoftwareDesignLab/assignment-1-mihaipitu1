@@ -12,6 +12,52 @@ namespace Assignment1.Models
         private DateTime creationDate;
         private Client client;
 
+        public long Id
+        {
+            get
+            {
+                return GetId();
+            }
+            set
+            {
+                SetId(value);
+            }
+        }
+
+        public double AmountMoney
+        {
+            get
+            {
+                return GetAmountMoney();
+            }
+            set
+            {
+                SetAmountMoney(value);
+            }
+        }
+
+        public DateTime CreationTime
+        {
+            get
+            {
+                return GetCreationDate();
+            }
+            set
+            {
+                SetCreationDate(value);
+            }
+        }
+        public Client Client
+        {
+            get
+            {
+                return GetClient();
+            }
+            set
+            {
+                SetClient(value);
+            }
+        }
         public long GetId()
         {
             return id;

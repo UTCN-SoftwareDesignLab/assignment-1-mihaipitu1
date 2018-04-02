@@ -5,6 +5,7 @@ using Assignment1.Models.Validators;
 using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -21,16 +22,16 @@ namespace Assignment1.Repository.Users
 
         public bool Delete(User user)
         {
+            Debug.WriteLine("Id of user is: " + user.GetId());
             if (user == null)
                 return false;
-            if (!user.Equals(GetUserById(user.GetId())))
-                return false; 
             using (MySqlConnection connection = connectionWrapper.GetConnection())
             {
                 connection.Open();
                 using (MySqlCommand command = connection.CreateCommand())
                 {
-                    command.CommandText = String.Format("delete from user where id = {0}", user.GetId());
+                    Debug.WriteLine("ID of user: " + user.GetId());
+                    command.CommandText = String.Format("delete from user where id = {0};", user.GetId());
                     command.ExecuteNonQuery();
                 }
                 connection.Close();
@@ -68,7 +69,10 @@ namespace Assignment1.Repository.Users
                 {
                     command.CommandText = String.Format("Select * from user where id = {0}", id);
                     MySqlDataReader reader = command.ExecuteReader();
-                    user = GetUserFromReader(reader);
+                    while (reader.Read())
+                    {
+                        user = GetUserFromReader(reader);
+                    }
                 }
                 connection.Close();
             }
@@ -86,7 +90,10 @@ namespace Assignment1.Repository.Users
                 {
                     command.CommandText = String.Format("Select * from user where username = '{0}' and password = '{1}' ",username,password);
                     MySqlDataReader reader = command.ExecuteReader();
-                    user = GetUserFromReader(reader);
+                    while (reader.Read())
+                    {
+                        user = GetUserFromReader(reader);
+                    }
                     notifier.SetResult(user);
                 }
                 connection.Close();
@@ -103,7 +110,13 @@ namespace Assignment1.Repository.Users
                 connection.Open();
                 using (MySqlCommand command = connection.CreateCommand())
                 {
-                    command.CommandText = String.Format("Insert into user({0},{1},{2},{3})", user.GetId(),user.GetName(),user.GetUsername(),user.GetPassword());
+                    bool isAdmin;
+                    if (user.GetRole().GetRole() == "admin")
+                        isAdmin = true;
+                    else
+                        isAdmin = false;
+                    Debug.WriteLine("Password is: " + user.GetPassword());
+                    command.CommandText = String.Format("Insert into user (id,name,username,password,isAdmin) VALUES('{0}','{1}','{2}','{3}','{4}');", user.GetId(),user.GetName(),user.GetUsername(),user.GetPassword(),isAdmin?1:0 );
                     command.ExecuteNonQuery();
                 }
                 connection.Close();
@@ -117,8 +130,16 @@ namespace Assignment1.Repository.Users
                 return false;
             else
             {
-                Delete(user);
-                Create(user);
+                using (MySqlConnection connection = connectionWrapper.GetConnection())
+                {
+                    connection.Open();
+                    using (MySqlCommand command = connection.CreateCommand())
+                    {
+                        command.CommandText = String.Format("UPDATE user SET name = '{0}' ,username = '{1}' ,password = '{2}' WHERE id = '{3}';", user.GetName(), user.GetUsername(), user.GetPassword() ,user.GetId());
+                        command.ExecuteNonQuery();
+                    }
+                    connection.Close();
+                }
                 return true;
             }
 
@@ -127,7 +148,7 @@ namespace Assignment1.Repository.Users
         private User GetUserFromReader(MySqlDataReader reader)
         {
             Role role = new Role(null, null);
-            if (reader.GetBoolean(4) == true)
+            if (reader.GetBoolean(4))
             {
                 role = GetRoleFromRights(Constants.Roles.ADMIN);
             }

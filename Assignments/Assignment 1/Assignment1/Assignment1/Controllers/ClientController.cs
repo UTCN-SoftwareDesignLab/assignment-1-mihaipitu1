@@ -36,7 +36,7 @@ namespace Assignment1.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(Client client)
         {
-            Debug.WriteLine(clientService.GetMaxId());
+           
             var newClient = new ClientBuilder()
                 .SetId(clientService.GetMaxId() + 1)
                 .SetName(client.GetName())
