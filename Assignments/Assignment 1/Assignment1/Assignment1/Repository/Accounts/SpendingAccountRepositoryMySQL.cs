@@ -65,8 +65,7 @@ namespace Assignment1.Repository.Accounts
                 connection.Open();
                 using (MySqlCommand command = connection.CreateCommand())
                 {
-                    command.CommandText = String.Format("SELECT ac.id, ac.amountMoney, ac.creationDate, ac.clientId, sp.FreeTransactions, sp.TransactionsFee, sp.NoTransactions" +
-                        "FROM account ac INNER JOIN spendingaccount sp ON ac.id = sp.id");
+                    command.CommandText = String.Format("SELECT bank.account.id,bank.account.amountMoney,bank.account.creationDate,bank.spendingaccount.freeTransactions,bank.spendingaccount.transactionFee,bank.spendingaccount.noTransactions FROM bank.account join bank.spendingaccount on account.id = bank.spendingaccount.id");
                     MySqlDataReader reader = command.ExecuteReader();
                     while(reader.Read())
                     {

@@ -33,8 +33,8 @@ namespace Assignment1
 
             services.AddScoped<ISavingAccountRepository,SavingAccountRepositoryMySQL>();
             services.AddScoped<ISpendingAccountRepository, SpendingAccountRepositoryMySQL>();
-            services.AddSingleton<IAccountService, SavingAccountService>();
-            services.AddSingleton<IAccountService, SpendingAccountService>();
+            services.AddScoped<IAccountService, SavingAccountService>();
+            services.AddScoped<IAccountService, SpendingAccountService>();
             services.AddScoped<IUserRepository, UserRepositoryMySQL > ();
             services.AddScoped<IAdminService,AdminServiceMySQL>();
             services.AddScoped<IClientRepository, ClientRepositoryMySQL>();
