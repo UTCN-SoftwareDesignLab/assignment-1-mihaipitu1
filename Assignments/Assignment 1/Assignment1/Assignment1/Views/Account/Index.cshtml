@@ -14,21 +14,26 @@
     <thead>
         <tr>
             <th>Id</th>
-            <th>Amount</th>    
+            <th>Amount</th>
         </tr>
     </thead>
     <tbody>
 @foreach (var item in Model) {
         <tr>
             <td>
-                Html.DisplayFor(modelItem => item.Id)
+               @Html.DisplayFor(modelItem => item.Id)
             </td>
             <td>
-                Html.DisplayFor(modelItem => item.AmountMoney)
+               @Html.DisplayFor(modelItem => item.AmountMoney)
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+               @Html.DisplayFor(modelItem => item.Type)
+            </td>
+            <td>
+               @Html.DisplayFor(modelItem => item.CreationTime)
+            </td>
+            <td>
+                @Html.ActionLink("Delete", "Delete", new { id = item.Id})
             </td>
         </tr>
 }

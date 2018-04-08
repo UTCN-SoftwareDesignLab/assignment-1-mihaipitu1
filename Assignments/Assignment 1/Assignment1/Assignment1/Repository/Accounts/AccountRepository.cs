@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace Assignment1.Repository.Accounts
 {
-    public interface ISpendingAccountRepository : BaseRepository<SpendingAccount>
+    public interface IAccountRepository : IBaseRepository<Account>
     {
-        SpendingAccount GetAccountById(long id);
+        Account GetAccountById(long id);
     }
 }

@@ -31,10 +31,8 @@ namespace Assignment1
             services.AddMvc();
             services.AddTransient<DBConnectionWrapper>(_ => new DBConnectionFactory().GetConnectionWrapper(false));
 
-            services.AddScoped<ISavingAccountRepository,SavingAccountRepositoryMySQL>();
-            services.AddScoped<ISpendingAccountRepository, SpendingAccountRepositoryMySQL>();
-            services.AddScoped<IAccountService, SavingAccountService>();
-            services.AddScoped<IAccountService, SpendingAccountService>();
+            services.AddScoped<IAccountRepository,AccountRepositoryMySQL>();
+            services.AddScoped<IAccountService, AccountServiceMySQL>();
             services.AddScoped<IUserRepository, UserRepositoryMySQL > ();
             services.AddScoped<IAdminService,AdminServiceMySQL>();
             services.AddScoped<IClientRepository, ClientRepositoryMySQL>();

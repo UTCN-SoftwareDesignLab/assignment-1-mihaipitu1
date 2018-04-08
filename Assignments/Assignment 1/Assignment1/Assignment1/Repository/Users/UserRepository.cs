@@ -7,7 +7,7 @@ using Assignment1.Models.Validators;
 
 namespace Assignment1.Repository.Users
 {
-    public interface IUserRepository : BaseRepository<User>
+    public interface IUserRepository : IBaseRepository<User>
     {
         Notification<User> GetUserByUsernameAndPassword(string username, string password);
 

@@ -5,11 +5,13 @@ using System.Threading.Tasks;
 
 namespace Assignment1.Models
 {
-    public abstract class Account
+    public class Account
     {
         private long id;
         private double amountMoney;
+        private string type;
         private DateTime creationDate;
+        private long clientId;
         private Client client;
 
         public long Id
@@ -33,6 +35,30 @@ namespace Assignment1.Models
             set
             {
                 SetAmountMoney(value);
+            }
+        }
+
+        public long ClientId
+        {
+            get
+            {
+                return GetClientId();
+            }
+            set
+            {
+                SetClientId(value);
+            }
+        }
+
+        public string Type
+        {
+            get
+            {
+                return GetType();
+            }
+            set
+            {
+                SetType(value);
             }
         }
 
@@ -78,6 +104,16 @@ namespace Assignment1.Models
             amountMoney = AmountMoney;
         }
 
+        public string GetType()
+        {
+            return type;
+        }
+
+        public void SetType(string Type)
+        {
+            type = Type;
+        }
+
         public DateTime GetCreationDate()
         {
             return creationDate;
@@ -91,6 +127,15 @@ namespace Assignment1.Models
         public Client GetClient()
         {
             return client;
+        }
+
+        public long GetClientId()
+        {
+            return clientId;
+        }
+        public void SetClientId(long ClientId)
+        {
+            clientId = ClientId;
         }
 
         public void SetClient(Client Client)

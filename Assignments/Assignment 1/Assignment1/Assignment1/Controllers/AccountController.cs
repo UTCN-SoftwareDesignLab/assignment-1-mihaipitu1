@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Assignment1.Models;
+using Assignment1.Models.Builders;
 using Assignment1.Service.Accounts;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -11,35 +13,16 @@ namespace Assignment1.Controllers
 {
     public class AccountController : Controller
     {
-        private IAccountService savingAccountService;
-        private IAccountService spendingAccountService;
-
-        public AccountController(IAccountService savingAccountService, IAccountService spendingAccountService)
+        private IAccountService accountService;
+        public AccountController(IAccountService accountService)
         {
-            this.savingAccountService = savingAccountService;
-            this.spendingAccountService = spendingAccountService;
+            this.accountService = accountService;
         }
-        // GET: Account
+        // GET: Account1
         public ActionResult Index()
         {
-            List<Account> savingAccounts = savingAccountService.GetAccounts();
-            List<Account> spendingAccounts = spendingAccountService.GetAccounts();
-            List<Account> accounts = new List<Account>();
-            foreach(Account acc in savingAccounts)
-            {
-                accounts.Add(acc);
-            }
-            foreach(Account acc in spendingAccounts)
-            {
-                accounts.Add(acc);
-            }
+            List<Account> accounts = accountService.GetAccounts();
             return View(accounts);
-        }
-
-        // GET: Account/Details/5
-        public ActionResult Details(int id)
-        {
-            return View();
         }
 
         // GET: Account/Create
@@ -51,64 +34,38 @@ namespace Assignment1.Controllers
         // POST: Account/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public ActionResult Create(Account account)
         {
-            try
-            {
-                // TODO: Add insert logic here
-
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            var newAccount = new AccountBuilder()
+                 .SetId(accountService.GetMaxId() + 1)
+                 .SetAmountMoney(account.GetAmountMoney())
+                 .SetCreationDate(DateTime.Now)
+                 .SetType(account.GetType())
+                 .SetClientId(account.GetClientId())
+                 .Build();
+            accountService.CreateAccount(newAccount);
+            return RedirectToAction("Index", "Account");
         }
 
-        // GET: Account/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
-
-        // POST: Account/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
-        {
-            try
-            {
-                // TODO: Add update logic here
-
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
 
         // GET: Account/Delete/5
         public ActionResult Delete(int id)
         {
-            return View();
+            var account = accountService.GetAccountById(id);
+            return View(account);
         }
 
         // POST: Account/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public ActionResult Delete(Account account)
         {
-            try
+            if(ModelState.IsValid)
             {
-                // TODO: Add delete logic here
-
-                return RedirectToAction(nameof(Index));
+                accountService.DeleteAccount(account);
+                return RedirectToAction("Index","Account");
             }
-            catch
-            {
-                return View();
-            }
+            return StatusCode(404);
         }
     }
 }

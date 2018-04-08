@@ -5,22 +5,20 @@ using System.Threading.Tasks;
 using Assignment1.Database;
 using Assignment1.Models;
 using Assignment1.Models.Builders;
-using Assignment1.Repository.Clients;
 using MySql.Data.MySqlClient;
 
 namespace Assignment1.Repository.Accounts
 {
-    public class SpendingAccountRepositoryMySQL : ISpendingAccountRepository
+    public class AccountRepositoryMySQL : IAccountRepository
     {
         private DBConnectionWrapper connectionWrapper;
-        private ClientRepositoryMySQL clientRepo;
-        public SpendingAccountRepositoryMySQL(DBConnectionWrapper connectionWrapper)
+
+        public AccountRepositoryMySQL(DBConnectionWrapper connectionWrapper)
         {
             this.connectionWrapper = connectionWrapper;
-            clientRepo = new ClientRepositoryMySQL(connectionWrapper);
         }
 
-        public bool Create(SpendingAccount t)
+        public bool Create(Account t)
         {
             if (t == null)
                 return false;
@@ -29,9 +27,7 @@ namespace Assignment1.Repository.Accounts
                 connection.Open();
                 using (MySqlCommand command = connection.CreateCommand())
                 {
-                    command.CommandText = String.Format("Insert into account ({0},'spending',{1},{2},{3})",t.GetId(),t.GetAmountMoney(),t.GetCreationDate(),t.GetClient().GetId());
-                    command.ExecuteNonQuery();
-                    command.CommandText = String.Format("Insert into spendingaccount ({0},{1},{2},{3})",t.GetId(),t.GetFreeTransactions(),t.GetTransactionFee(),t.GetNoTransactions());
+                    command.CommandText = String.Format("Insert into account (id,type,amountMoney,creationDate,clientId) VALUES('{0}','{1}','{2}','{3}','{4}');",t.GetId(),t.GetType(),t.GetAmountMoney(),t.GetCreationDate(),t.GetClientId());
                     command.ExecuteNonQuery();
                 }
                 connection.Close();
@@ -39,7 +35,7 @@ namespace Assignment1.Repository.Accounts
             return true;
         }
 
-        public bool Update(SpendingAccount t)
+        public bool Delete(Account t)
         {
             if (t == null)
                 return false;
@@ -48,7 +44,7 @@ namespace Assignment1.Repository.Accounts
                 connection.Open();
                 using (MySqlCommand command = connection.CreateCommand())
                 {
-                    command.CommandText = String.Format("Update account SET amountMoney = {1} where id = {0}", t.GetId(), t.GetAmountMoney());
+                    command.CommandText = String.Format("Delete from account where id = '{0}' ;", t.GetId());
                     command.ExecuteNonQuery();
                 }
                 connection.Close();
@@ -56,16 +52,16 @@ namespace Assignment1.Repository.Accounts
             return true;
         }
 
-        public List<SpendingAccount> FindAll()
+        public List<Account> FindAll()
         {
-            List<SpendingAccount> accounts = new List<SpendingAccount>();
+            List<Account> accounts = new List<Account>();
 
             using (MySqlConnection connection = connectionWrapper.GetConnection())
             {
                 connection.Open();
                 using (MySqlCommand command = connection.CreateCommand())
                 {
-                    command.CommandText = String.Format("SELECT bank.account.id,bank.account.amountMoney,bank.account.creationDate,bank.spendingaccount.freeTransactions,bank.spendingaccount.transactionFee,bank.spendingaccount.noTransactions FROM bank.account join bank.spendingaccount on account.id = bank.spendingaccount.id");
+                    command.CommandText = String.Format("Select * from account");
                     MySqlDataReader reader = command.ExecuteReader();
                     while(reader.Read())
                     {
@@ -74,27 +70,29 @@ namespace Assignment1.Repository.Accounts
                 }
                 connection.Close();
             }
-
             return accounts;
         }
 
-        public SpendingAccount GetAccountById(long id)
+        public Account GetAccountById(long id)
         {
             using (MySqlConnection connection = connectionWrapper.GetConnection())
             {
                 connection.Open();
                 using (MySqlCommand command = connection.CreateCommand())
                 {
-                    command.CommandText = String.Format("SELECT ac.id, ac.amountMoney, ac.creationDate, ac.clientId, sp.FreeTransactions, sp.TransactionsFee, sp.NoTransactions" +
-                        "FROM account ac INNER JOIN spendingaccount sp ON ac.id = sp.id WHERE id = {0}",id);
+                    command.CommandText = String.Format("Select * from account where id = {0}", id);
                     MySqlDataReader reader = command.ExecuteReader();
-                    return GetAccountFromReader(reader);
+                    while (reader.Read())
+                    {
+                        return GetAccountFromReader(reader);
+                    }
                 }
                 connection.Close();
             }
+            return null;
         }
 
-        public bool Delete(SpendingAccount t)
+        public bool Update(Account t)
         {
             if (t == null)
                 return false;
@@ -103,9 +101,7 @@ namespace Assignment1.Repository.Accounts
                 connection.Open();
                 using (MySqlCommand command = connection.CreateCommand())
                 {
-                    command.CommandText = String.Format("delete from account where id = {0}", t.GetId());
-                    command.ExecuteNonQuery();
-                    command.CommandText = String.Format("delete from spendingaccount where id = {0}", t.GetId());
+                    command.CommandText = String.Format("UPDATE account SET amountMoney = '{0}' WHERE id = '{1}';", t.GetAmountMoney(),t.GetId());
                     command.ExecuteNonQuery();
                 }
                 connection.Close();
@@ -113,16 +109,14 @@ namespace Assignment1.Repository.Accounts
             return true;
         }
 
-        private SpendingAccount GetAccountFromReader(MySqlDataReader reader)
+        private Account GetAccountFromReader(MySqlDataReader reader)
         {
-            return new SpendingAccountBuilder()
+            return new AccountBuilder()
                 .SetId(reader.GetInt64(0))
-                .SetAmountMoney(reader.GetDouble(1))
-                .SetCreationDate(reader.GetDateTime(2))
-                .SetClient(clientRepo.GetClientById(reader.GetInt64(0)))
-                .SetFreeTransactions(reader.GetInt32(4))
-                .SetTransactionFee(reader.GetDouble(5))
-                .SetNoTransactions(reader.GetInt32(6))
+                .SetType(reader.GetString(1))
+                .SetAmountMoney(reader.GetDouble(2))
+                .SetCreationDate(reader.GetDateTime(3))
+                .SetClientId(reader.GetInt64(4))
                 .Build();
         }
     }

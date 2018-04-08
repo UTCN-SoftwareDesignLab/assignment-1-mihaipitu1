@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Assignment1.Repository.Clients
 {
-    public interface IClientRepository : BaseRepository<Client>
+    public interface IClientRepository : IBaseRepository<Client>
     {
         Client GetClientById(long id);
     }

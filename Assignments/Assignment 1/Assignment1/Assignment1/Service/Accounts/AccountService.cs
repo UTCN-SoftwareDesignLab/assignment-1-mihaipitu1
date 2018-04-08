@@ -17,5 +17,9 @@ namespace Assignment1.Service.Accounts
         bool DeleteAccount(Account account);
 
         bool PayBills(Account accountFrom,double amount);
+
+        Account GetAccountById(long id);
+
+        long GetMaxId();
     }
 }

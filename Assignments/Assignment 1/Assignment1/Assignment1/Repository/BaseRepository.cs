@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Assignment1.Repository
 {
-    public interface BaseRepository<T>
+    public interface IBaseRepository<T>
     {
         List<T> FindAll();
 

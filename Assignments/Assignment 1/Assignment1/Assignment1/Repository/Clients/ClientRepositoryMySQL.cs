@@ -43,7 +43,10 @@ namespace Assignment1.Repository.Clients
             Client client = null;
             using (MySqlConnection connection = connectionWrapper.GetConnection())
             {
-                connection.Open();
+                if (connection.State == System.Data.ConnectionState.Closed)
+                {
+                    connection.Open();
+                }
                 using (MySqlCommand command = connection.CreateCommand())
                 {
                     command.CommandText = String.Format("Select * from client where id = {0}",id);
@@ -76,8 +79,7 @@ namespace Assignment1.Repository.Clients
         }
 
         public bool Update(Client client)
-        {
-            if (client == null)
+        {if (client == null)
                 return false;
             using (MySqlConnection connection = connectionWrapper.GetConnection())
             {
@@ -91,6 +93,7 @@ namespace Assignment1.Repository.Clients
                 connection.Close();
             }
             return true;
+            
         }
 
         public bool Delete(Client client)
