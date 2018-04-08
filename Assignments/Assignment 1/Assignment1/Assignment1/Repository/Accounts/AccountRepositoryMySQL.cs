@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Assignment1.Database;
 using Assignment1.Models;
 using Assignment1.Models.Builders;
 using MySql.Data.MySqlClient;
+using MySql.Data.Types;
 
 namespace Assignment1.Repository.Accounts
 {
@@ -27,7 +29,7 @@ namespace Assignment1.Repository.Accounts
                 connection.Open();
                 using (MySqlCommand command = connection.CreateCommand())
                 {
-                    command.CommandText = String.Format("Insert into account (id,type,amountMoney,creationDate,clientId) VALUES('{0}','{1}','{2}','{3}','{4}');",t.GetId(),t.GetType(),t.GetAmountMoney(),t.GetCreationDate(),t.GetClientId());
+                    command.CommandText = String.Format("Insert into account (id,type,amountMoney,creationDate,clientId) VALUES('{0}','{1}','{2}','{3}','{4}');",t.GetId(),t.GetType(),t.GetAmountMoney(), t.GetCreationDate().ToString("yyyy-MM-dd HH:mm:ss"), t.GetClientId());
                     command.ExecuteNonQuery();
                 }
                 connection.Close();
@@ -101,6 +103,7 @@ namespace Assignment1.Repository.Accounts
                 connection.Open();
                 using (MySqlCommand command = connection.CreateCommand())
                 {
+                    Debug.WriteLine(t.GetAmountMoney());
                     command.CommandText = String.Format("UPDATE account SET amountMoney = '{0}' WHERE id = '{1}';", t.GetAmountMoney(),t.GetId());
                     command.ExecuteNonQuery();
                 }

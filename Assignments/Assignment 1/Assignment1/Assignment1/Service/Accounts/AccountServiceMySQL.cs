@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Assignment1.Models;
@@ -34,6 +35,7 @@ namespace Assignment1.Service.Accounts
         public bool PayBills(Account accountFrom, double amount)
         {
             double newAmount = accountFrom.GetAmountMoney() - amount;
+            Debug.WriteLine(newAmount);
             accountFrom.SetAmountMoney(newAmount);
             return accountRepo.Update(accountFrom);
         }

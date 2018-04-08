@@ -67,5 +67,32 @@ namespace Assignment1.Controllers
             }
             return StatusCode(404);
         }
+
+        public ActionResult Transfer()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult TransferMoney(int AccountFrom,int AccountTo,double Amount)
+        {
+            Account accountFrom = accountService.GetAccountById(AccountFrom);
+            Account accountTo = accountService.GetAccountById(AccountTo);
+            accountService.TransferMoney(accountFrom, Amount, accountTo);
+            return RedirectToAction("Index", "Account");
+        }
+
+        public ActionResult Pay()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult PayBill(int AccountFrom, double Amount)
+        {
+            Account account = accountService.GetAccountById(AccountFrom);
+            accountService.PayBills(account, Amount);
+            return RedirectToAction("Index", "Account");
+        }
     }
 }

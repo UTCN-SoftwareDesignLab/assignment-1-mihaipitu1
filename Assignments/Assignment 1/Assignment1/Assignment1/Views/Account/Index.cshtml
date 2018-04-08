@@ -8,7 +8,9 @@
 <h2>Index</h2>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create">Create New</a> |
+    @Html.ActionLink("Transfer", "Transfer", "Account") | 
+    @Html.ActionLink("Pay Bill", "Pay", "Account")
 </p>
 <table class="table">
     <thead>
@@ -33,7 +35,7 @@
                @Html.DisplayFor(modelItem => item.CreationTime)
             </td>
             <td>
-                @Html.ActionLink("Delete", "Delete", new { id = item.Id})
+                @Html.ActionLink("Delete", "Delete", new { id = item.Id}) 
             </td>
         </tr>
 }
