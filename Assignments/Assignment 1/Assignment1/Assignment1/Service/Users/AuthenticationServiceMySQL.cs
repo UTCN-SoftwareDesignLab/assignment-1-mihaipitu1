@@ -21,7 +21,28 @@ namespace Assignment1.Service.Users
 
         public Notification<User> Login(string username, string password)
         {
-            return userRepo.GetUserByUsernameAndPassword(username, EncodePassword(password));
+            User user = new UserBuilder()
+                .SetUsername(username)
+                .SetPassword(password)
+                .Build();
+            UserValidator validator = new UserValidator(user);
+            Notification<User> notifier = new Notification<User>();
+
+            if(!validator.Validate())
+            {
+                foreach (var error in validator.GetErrors())
+                {
+                    notifier.AddError(error);
+                }
+                notifier.SetResult(null);
+            }
+            else
+            {
+                user = userRepo.GetUserByUsernameAndPassword(username, EncodePassword(password));
+                notifier.SetResult(user);
+            }
+
+            return notifier;
         }
 
         private string EncodePassword(string password)
@@ -32,7 +53,7 @@ namespace Assignment1.Service.Users
             string sha256Str = string.Empty;
             foreach (byte b in cryString)
             {
-                sha256Str += cryString.ToString();
+                sha256Str += b.ToString("x");
             }
             return sha256Str;
         }

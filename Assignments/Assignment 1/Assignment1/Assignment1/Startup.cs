@@ -30,7 +30,7 @@ namespace Assignment1
         {
             services.AddMvc();
             services.AddTransient<DBConnectionWrapper>(_ => new DBConnectionFactory().GetConnectionWrapper(false));
-
+            services.AddScoped<IAuthenticationService,AuthenticationServiceMySQL>();
             services.AddScoped<IAccountRepository,AccountRepositoryMySQL>();
             services.AddScoped<IAccountService, AccountServiceMySQL>();
             services.AddScoped<IUserRepository, UserRepositoryMySQL > ();
@@ -58,7 +58,7 @@ namespace Assignment1
             {
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=Client}/{action=Index}/{id?}");
+                    template: "{controller=Login}/{action=Login}/{id?}");
             });
         }
     }

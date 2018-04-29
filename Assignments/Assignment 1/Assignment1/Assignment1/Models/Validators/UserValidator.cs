@@ -28,6 +28,8 @@ namespace Assignment1.Models.Validators
 
         public bool Validate()
         {
+            ValidateUsername(user.GetUsername());
+            ValidatePassword(user.GetPassword());
             return errors.Capacity == 0;
         }
 

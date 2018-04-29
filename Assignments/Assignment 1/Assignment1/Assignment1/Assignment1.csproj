@@ -14,4 +14,8 @@
     <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="2.0.3" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Content Update="C:\Users\mihai.pitu\.nuget\packages\mysql.data\6.10.6\contentFiles\any\netcoreapp2.0\app.config.transform" Link="Views\app.config.transform" />
+  </ItemGroup>
+
 </Project>

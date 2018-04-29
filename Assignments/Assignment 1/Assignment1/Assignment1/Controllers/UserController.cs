@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Assignment1.Database;
 using Assignment1.Models;
 using Assignment1.Models.Builders;
+using Assignment1.Models.Validators;
 using Assignment1.Service.Users;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -48,8 +49,18 @@ namespace Assignment1.Controllers
                     user.SetRole(GetRoleFromRights(Constants.Roles.EMPLOYEE));
                 }
             }
-            adminService.Register(user.GetName(), user.GetUsername(), user.GetPassword(),user.GetRole());
+            Notification<bool> notifier = adminService.Register(user.GetName(), user.GetUsername(), user.GetPassword(),user.GetRole());
+            if (!notifier.GetResult())
+            {
+                ViewData["Errors"] = notifier.GetErrors();
+                return View("Error");
+            }
             return RedirectToAction("Index","User");
+        }
+
+        public ActionResult Error()
+        {
+            return View();
         }
 
         // GET: User/Edit/5

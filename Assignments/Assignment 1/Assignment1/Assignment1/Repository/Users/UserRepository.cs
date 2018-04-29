@@ -9,7 +9,7 @@ namespace Assignment1.Repository.Users
 {
     public interface IUserRepository : IBaseRepository<User>
     {
-        Notification<User> GetUserByUsernameAndPassword(string username, string password);
+        User GetUserByUsernameAndPassword(string username, string password);
 
         User GetUserById(long id);
     }

@@ -35,5 +35,10 @@ namespace Assignment1.Models.Validators
             return result;
         }
 
+        public List<string> GetErrors()
+        {
+            return errors;
+        }
+
     }
 }

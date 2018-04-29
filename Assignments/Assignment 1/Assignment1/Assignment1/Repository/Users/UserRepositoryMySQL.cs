@@ -22,7 +22,6 @@ namespace Assignment1.Repository.Users
 
         public bool Delete(User user)
         {
-            Debug.WriteLine("Id of user is: " + user.GetId());
             if (user == null)
                 return false;
             using (MySqlConnection connection = connectionWrapper.GetConnection())
@@ -79,9 +78,8 @@ namespace Assignment1.Repository.Users
             return user;
         }
 
-        public Notification<User> GetUserByUsernameAndPassword(string username, string password)
+        public User GetUserByUsernameAndPassword(string username, string password)
         {
-            Notification<User> notifier = new Notification<User>();
             User user = new User();
             using (MySqlConnection connection = connectionWrapper.GetConnection())
             {
@@ -94,11 +92,10 @@ namespace Assignment1.Repository.Users
                     {
                         user = GetUserFromReader(reader);
                     }
-                    notifier.SetResult(user);
                 }
                 connection.Close();
             }
-            return notifier;
+            return user;
         }
 
         public bool Create(User user)

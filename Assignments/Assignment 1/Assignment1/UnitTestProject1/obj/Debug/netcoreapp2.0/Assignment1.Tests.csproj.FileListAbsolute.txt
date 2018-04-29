@@ -1,0 +1,17 @@
+C:\Users\mihai.pitu\Desktop\Facultate\SD\Assignments\Assignments\Assignment 1\Assignment1\UnitTestProject1\obj\Debug\netcoreapp2.0\Assignment1.Tests.csprojResolveAssemblyReference.cache
+C:\Users\mihai.pitu\Desktop\Facultate\SD\Assignments\Assignments\Assignment 1\Assignment1\UnitTestProject1\obj\Debug\netcoreapp2.0\Assignment1.Tests.csproj.CoreCompileInputs.cache
+C:\Users\mihai.pitu\Desktop\Facultate\SD\Assignments\Assignments\Assignment 1\Assignment1\UnitTestProject1\obj\Debug\netcoreapp2.0\Assignment1.Tests.AssemblyInfoInputs.cache
+C:\Users\mihai.pitu\Desktop\Facultate\SD\Assignments\Assignments\Assignment 1\Assignment1\UnitTestProject1\obj\Debug\netcoreapp2.0\Assignment1.Tests.AssemblyInfo.cs
+C:\Users\mihai.pitu\Desktop\Facultate\SD\Assignments\Assignments\Assignment 1\Assignment1\UnitTestProject1\bin\Debug\netcoreapp2.0\Microsoft.VisualStudio.TestPlatform.MSTest.TestAdapter.dll
+C:\Users\mihai.pitu\Desktop\Facultate\SD\Assignments\Assignments\Assignment 1\Assignment1\UnitTestProject1\bin\Debug\netcoreapp2.0\Microsoft.VisualStudio.TestPlatform.MSTestAdapter.PlatformServices.Interface.dll
+C:\Users\mihai.pitu\Desktop\Facultate\SD\Assignments\Assignments\Assignment 1\Assignment1\UnitTestProject1\bin\Debug\netcoreapp2.0\Microsoft.VisualStudio.TestPlatform.MSTestAdapter.PlatformServices.dll
+C:\Users\mihai.pitu\Desktop\Facultate\SD\Assignments\Assignments\Assignment 1\Assignment1\UnitTestProject1\bin\Debug\netcoreapp2.0\Assignment1.Tests.deps.json
+C:\Users\mihai.pitu\Desktop\Facultate\SD\Assignments\Assignments\Assignment 1\Assignment1\UnitTestProject1\bin\Debug\netcoreapp2.0\Assignment1.Tests.runtimeconfig.json
+C:\Users\mihai.pitu\Desktop\Facultate\SD\Assignments\Assignments\Assignment 1\Assignment1\UnitTestProject1\bin\Debug\netcoreapp2.0\Assignment1.Tests.runtimeconfig.dev.json
+C:\Users\mihai.pitu\Desktop\Facultate\SD\Assignments\Assignments\Assignment 1\Assignment1\UnitTestProject1\bin\Debug\netcoreapp2.0\Assignment1.Tests.dll
+C:\Users\mihai.pitu\Desktop\Facultate\SD\Assignments\Assignments\Assignment 1\Assignment1\UnitTestProject1\bin\Debug\netcoreapp2.0\Assignment1.Tests.pdb
+C:\Users\mihai.pitu\Desktop\Facultate\SD\Assignments\Assignments\Assignment 1\Assignment1\UnitTestProject1\bin\Debug\netcoreapp2.0\Assignment1.dll
+C:\Users\mihai.pitu\Desktop\Facultate\SD\Assignments\Assignments\Assignment 1\Assignment1\UnitTestProject1\bin\Debug\netcoreapp2.0\Assignment1.pdb
+C:\Users\mihai.pitu\Desktop\Facultate\SD\Assignments\Assignments\Assignment 1\Assignment1\UnitTestProject1\obj\Debug\netcoreapp2.0\Assignment1.Tests.csproj.CopyComplete
+C:\Users\mihai.pitu\Desktop\Facultate\SD\Assignments\Assignments\Assignment 1\Assignment1\UnitTestProject1\obj\Debug\netcoreapp2.0\Assignment1.Tests.dll
+C:\Users\mihai.pitu\Desktop\Facultate\SD\Assignments\Assignments\Assignment 1\Assignment1\UnitTestProject1\obj\Debug\netcoreapp2.0\Assignment1.Tests.pdb
